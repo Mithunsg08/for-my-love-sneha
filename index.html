@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love ❤️</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #333;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            transition: all 0.5s ease;
+        }
+        h1 {
+            font-size: 26px;
+            margin-bottom: 25px;
+            color: #d63384;
+        }
+        p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #555;
+            line-height: 1.5;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .btn-yes {
+            background-color: #ff4d6d;
+            color: white;
+        }
+        .btn-yes:hover {
+            background-color: #e63956;
+            transform: scale(1.05);
+        }
+        .btn-no {
+            background-color: #adb5bd;
+            color: white;
+        }
+        .btn-no:hover {
+            background-color: #6c757d;
+        }
+        .hidden {
+            display: none !important;
+        }
+        video {
+            width: 100%;
+            max-height: 200px;
+            border-radius: 10px;
+            background: #000;
+            margin-bottom: 15px;
+            transform: scaleX(-1); /* Mirror effect */
+        }
+        .emoji-feedback {
+            font-size: 22px;
+            margin-top: 10px;
+            min-height: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SCREEN 1: DO YOU LOVE ME? -->
+    <div id="screen-1" class="container">
+        <h1 id="question-text">Do you love me? ❤️</h1>
+        <div class="emoji-feedback" id="feedback-emoji">🥰✨</div>
+        <div class="btn-group">
+            <button class="btn-yes" onclick="handleYes()">Obviously! 😍</button>
+            <button class="btn-no" id="no-btn" onclick="handleNo()">No 😒</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 2: CELEBRATION & OPTIONAL WEBCAM REACTION -->
+    <div id="screen-2" class="container hidden">
+        <h1>I knew you love me! 🥰</h1>
+        <p>I love you so much more than words can say. Let's capture your cute reaction to this little surprise! (Totally optional—you can allow or skip).</p>
+        
+        <div id="cam-container" class="hidden">
+            <video id="webcam" autoplay playsinline muted></video>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-yes" onclick="startCamera()">Allow Camera 📸</button>
+            <button class="btn-no" onclick="goToHeartScreen()">Skip & Continue 👉</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 3: ENTER MY HEART -->
+    <div id="screen-3" class="container hidden">
+        <h1>Are you ready to enter my heart? 💓</h1>
+        <p id="heart-subtext">There is only one right answer here...</p>
+        <div class="btn-group">
+            <button class="btn-yes" onclick="enterHeart()">Yes! 💖</button>
+            <button class="btn-no" onclick="handleBrokenNo()">No 🙃</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 4: FINAL ROMANTIC LANDING -->
+    <div id="screen-4" class="container hidden">
+        <h1>Welcome to My Heart, My Bangara! ✨</h1>
+        <p>You are officially locked in forever. This little corner of the internet is built entirely for you—filled with our memories, love notes, and infinite smiles.</p>
+        <div class="btn-group">
+            <button class="btn-yes" onclick="alert('More surprises coming soon! ❤️')">Open Secret Love Note 💌</button>
+        </div>
+    </div>
+
+    <script>
+        // Array of funny/dramatic "No" responses with Kannada & English slang + emojis
+        const noResponses = [
+            { text: "Noduuuuuuuuuuuu 🥺", emoji: "🥺👀" },
+            { text: "But I still love you ❤️", emoji: "💖😭" },
+            { text: "Aythu bidamma 🙄", emoji: "🙄💅" },
+            { text: "Hogu! 😤", emoji: "😤👋" },
+            { text: "Nan mudhu alva Yes antha kodu 😘", emoji: "🥰😘" },
+            { text: "Nan bangara alva 💍✨", emoji: "✨🥺" },
+            { text: "Please yes antha kodu 🙏❤️", emoji: "🥺💖🙏" },
+            { text: "Tumba stubborn aytri neevu! 😒😂", emoji: "😂❤️" }
+        ];
+
+        let noClickCount = 0;
+
+        function handleNo() {
+            const current = noResponses[noClickCount % noResponses.length];
+            document.getElementById('no-btn').innerText = current.text;
+            document.getElementById('feedback-emoji').innerText = current.emoji;
+            noClickCount++;
+
+            // Make the Yes button grow bigger each time she clicks No!
+            let yesBtn = document.querySelector('#screen-1 .btn-yes');
+            let currentScale = 1 + (noClickCount * 0.1);
+            yesBtn.style.transform = `scale(${currentScale})`;
+        }
+
+        function handleYes() {
+            document.getElementById('screen-1').classList.add('hidden');
+            document.getElementById('screen-2').classList.remove('hidden');
+        }
+
+        let mediaRecorder;
+        let recordedChunks = [];
+
+        async function startCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                const videoElement = document.getElementById('webcam');
+                videoElement.srcObject = stream;
+                document.getElementById('cam-container').classList.remove('hidden');
+
+                // Optional local recording setup
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) recordedChunks.push(event.data);
+                };
+                mediaRecorder.start();
+
+                // Change button to let her proceed after checking camera
+                let btnGroup = document.querySelector('#screen-2 .btn-group');
+                btnGroup.innerHTML = `<button class="btn-yes" onclick="goToHeartScreen()">Continue to My Heart 👉</button>`;
+            } catch (err) {
+                // If she clicks Block or denies permission, gracefully move on without breaking!
+                alert("No worries at all! Let's keep going.");
+                goToHeartScreen();
+            }
+        }
+
+        function goToHeartScreen() {
+            // Stop camera stream if active
+            const videoElement = document.getElementById('webcam');
+            if (videoElement.srcObject) {
+                let tracks = videoElement.srcObject.getTracks();
+                tracks.forEach(track => track.stop());
+            }
+            document.getElementById('screen-2').classList.add('hidden');
+            document.getElementById('screen-3').classList.remove('hidden');
+        }
+
+        function handleBrokenNo() {
+            document.getElementById('heart-subtext').innerText = "❌ Oops! It is broken! I knew you would click on No, so I made it broken—there is no other option, you have to enter my heart! 😂💖";
+            document.querySelector('#screen-3 .btn-no').style.display = 'none';
+        }
+
+        function enterHeart() {
+            document.getElementById('screen-3').classList.add('hidden');
+            document.getElementById('screen-4').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
