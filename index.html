@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Love ❤️</title>
+    <title>For My Bangara ❤️</title>
     <style>
         * {
             box-sizing: border-box;
@@ -11,36 +11,41 @@
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
         body {
             background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
             color: #333;
+            padding: 20px;
         }
+
         .container {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 35px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(220, 53, 69, 0.2);
             text-align: center;
-            max-width: 450px;
-            width: 90%;
-            transition: all 0.5s ease;
+            max-width: 600px;
+            width: 100%;
+            transition: all 0.4s ease;
         }
+
         h1 {
-            font-size: 26px;
-            margin-bottom: 25px;
+            font-size: 28px;
             color: #d63384;
+            margin-bottom: 20px;
         }
+
         p {
             font-size: 16px;
-            margin-bottom: 20px;
             color: #555;
-            line-height: 1.5;
+            line-height: 1.6;
+            margin-bottom: 20px;
         }
+
         .btn-group {
             display: flex;
             justify-content: center;
@@ -48,96 +53,193 @@
             margin-top: 20px;
             flex-wrap: wrap;
         }
+
         button {
-            padding: 12px 25px;
+            padding: 12px 28px;
             font-size: 16px;
             font-weight: bold;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
+
         .btn-yes {
             background-color: #ff4d6d;
             color: white;
         }
+
         .btn-yes:hover {
             background-color: #e63956;
-            transform: scale(1.05);
+            transform: translateY(-2px);
         }
+
         .btn-no {
             background-color: #adb5bd;
             color: white;
         }
-        .btn-no:hover {
-            background-color: #6c757d;
-        }
+
         .hidden {
             display: none !important;
         }
+
+        .emoji-display {
+            font-size: 32px;
+            margin: 15px 0;
+            min-height: 45px;
+        }
+
+        /* HUB STYLING */
+        .hub-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 18px;
+            border: 2px solid #ffe6ea;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-50px);
+            border-color: #ff4d6d;
+        }
+
+        .card h3 {
+            color: #d63384;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
         video {
             width: 100%;
-            max-height: 200px;
-            border-radius: 10px;
+            max-height: 220px;
+            border-radius: 15px;
             background: #000;
             margin-bottom: 15px;
-            transform: scaleX(-1); /* Mirror effect */
+            transform: scaleX(-1);
         }
-        .emoji-feedback {
-            font-size: 22px;
-            margin-top: 10px;
-            min-height: 40px;
+
+        /* SCRATCH CARD SIMULATION */
+        .scratch-box {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 12px;
+            font-weight: bold;
+            color: #495057;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.3s ease;
+        }
+
+        .garden-container {
+            font-size: 30px;
+            min-height: 50px;
+            letter-spacing: 5px;
         }
     </style>
 </head>
 <body>
 
-    <!-- SCREEN 1: DO YOU LOVE ME? -->
+    <!-- SCREEN 1: THE BANTER GATEKEEPER -->
     <div id="screen-1" class="container">
-        <h1 id="question-text">Do you love me? ❤️</h1>
-        <div class="emoji-feedback" id="feedback-emoji">🥰✨</div>
+        <h1>Do you love me? ❤️</h1>
+        <p>Think carefully before clicking... 😉</p>
+        <div class="emoji-display" id="feedback-emoji">🥰✨</div>
         <div class="btn-group">
             <button class="btn-yes" onclick="handleYes()">Obviously! 😍</button>
             <button class="btn-no" id="no-btn" onclick="handleNo()">No 😒</button>
         </div>
     </div>
 
-    <!-- SCREEN 2: CELEBRATION & OPTIONAL WEBCAM REACTION -->
+    <!-- SCREEN 2: CELEBRATION & OPTIONAL SMILE CAM -->
     <div id="screen-2" class="container hidden">
-        <h1>I knew you love me! 🥰</h1>
-        <p>I love you so much more than words can say. Let's capture your cute reaction to this little surprise! (Totally optional—you can allow or skip).</p>
+        <h1>I knew it! You love me so much! 🥰✨</h1>
+        <p>Let's capture that gorgeous smile of yours right now! Allow camera access to take a quick reaction snap (totally optional, click skip if you prefer!).</p>
         
         <div id="cam-container" class="hidden">
             <video id="webcam" autoplay playsinline muted></video>
         </div>
 
-        <div class="btn-group">
+        <div class="btn-group" id="cam-btns">
             <button class="btn-yes" onclick="startCamera()">Allow Camera 📸</button>
             <button class="btn-no" onclick="goToHeartScreen()">Skip & Continue 👉</button>
         </div>
     </div>
 
-    <!-- SCREEN 3: ENTER MY HEART -->
+    <!-- SCREEN 3: ENTER MY HEART (BROKEN NO) -->
     <div id="screen-3" class="container hidden">
         <h1>Are you ready to enter my heart? 💓</h1>
-        <p id="heart-subtext">There is only one right answer here...</p>
+        <p id="heart-subtext">Choose wisely, my love!</p>
         <div class="btn-group">
             <button class="btn-yes" onclick="enterHeart()">Yes! 💖</button>
-            <button class="btn-no" onclick="handleBrokenNo()">No 🙃</button>
+            <button class="btn-no" id="broken-no-btn" onclick="handleBrokenNo()">No 🙃</button>
         </div>
     </div>
 
-    <!-- SCREEN 4: FINAL ROMANTIC LANDING -->
-    <div id="screen-4" class="container hidden">
-        <h1>Welcome to My Heart, My Bangara! ✨</h1>
-        <p>You are officially locked in forever. This little corner of the internet is built entirely for you—filled with our memories, love notes, and infinite smiles.</p>
-        <div class="btn-group">
-            <button class="btn-yes" onclick="alert('More surprises coming soon! ❤️')">Open Secret Love Note 💌</button>
+    <!-- SCREEN 4: THE 30-45 MINUTE ROMANTIC HUB -->
+    <div id="screen-4" class="container hidden" style="max-width: 800px;">
+        <h1>Welcome to My Heart, My Bangara! 🏰✨</h1>
+        <p>This entire digital space was created just for you. Take your time, explore each box, and enjoy your personalized experience!</p>
+
+        <div class="hub-grid">
+            
+            <!-- FEATURE 1: LOVE JAR -->
+            <div class="card">
+                <h3>💌 Digital Love Jar</h3>
+                <p id="love-reason">Click to pull out a sweet reason why I love you!</p>
+                <button class="btn-yes" style="padding: 8px 18px; font-size: 14px;" onclick="generateLoveReason()">Pull Reason 💖</button>
+            </div>
+
+            <!-- FEATURE 2: VIRTUAL LOVE GARDEN -->
+            <div class="card">
+                <h3>🌸 Virtual Garden</h3>
+                <p>Water the seeds to make our flowers bloom!</p>
+                <div class="garden-container" id="garden-flowers">🌱</div>
+                <button class="btn-yes" style="padding: 8px 18px; font-size: 14px; margin-top: 10px;" onclick="waterGarden()">Water Garden 💧</button>
+            </div>
+
+            <!-- FEATURE 3: SCRATCH CARD -->
+            <div class="card">
+                <h3>✨ Memory Scratch Card</h3>
+                <p>Click/tap to scratch away and reveal a secret memory!</p>
+                <div class="scratch-box" id="scratch-card" onclick="revealMemory()">❓ Scratch Here</div>
+            </div>
+
+            <!-- FEATURE 4: DATE NIGHT SPINNER -->
+            <div class="card">
+                <h3>🎟️ Next Date Picker</h3>
+                <p id="date-idea">What should we do on our next special date?</p>
+                <button class="btn-yes" style="padding: 8px 18px; font-size: 14px;" onclick="spinDateIdea()">Pick Date Idea 🎡</button>
+            </div>
+
+            <!-- FEATURE 5: FORTUNE COOKIE -->
+            <div class="card">
+                <h3>🥠 Relationship Fortune</h3>
+                <p id="fortune-text">Crack open a fortune cookie for today!</p>
+                <button class="btn-yes" style="padding: 8px 18px; font-size: 14px;" onclick="crackFortune()">Crack Cookie 🥠</button>
+            </div>
+
+            <!-- FEATURE 6: OPEN WHEN LETTER -->
+            <div class="card">
+                <h3>✉️ "Open When" Letter</h3>
+                <p>Open when you are having a tiring day or missing me.</p>
+                <button class="btn-yes" style="padding: 8px 18px; font-size: 14px;" onclick="openLetter()">Read Letter 📖</button>
+            </div>
+
         </div>
     </div>
 
     <script>
-        // Array of funny/dramatic "No" responses with Kannada & English slang + emojis
+        // Banter Phrases & Responses
         const noResponses = [
             { text: "Noduuuuuuuuuuuu 🥺", emoji: "🥺👀" },
             { text: "But I still love you ❤️", emoji: "💖😭" },
@@ -157,9 +259,8 @@
             document.getElementById('feedback-emoji').innerText = current.emoji;
             noClickCount++;
 
-            // Make the Yes button grow bigger each time she clicks No!
             let yesBtn = document.querySelector('#screen-1 .btn-yes');
-            let currentScale = 1 + (noClickCount * 0.1);
+            let currentScale = 1 + (noClickCount * 0.12);
             yesBtn.style.transform = `scale(${currentScale})`;
         }
 
@@ -168,52 +269,102 @@
             document.getElementById('screen-2').classList.remove('hidden');
         }
 
-        let mediaRecorder;
-        let recordedChunks = [];
-
+        // Camera Logic
         async function startCamera() {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-                const videoElement = document.getElementById('webcam');
-                videoElement.srcObject = stream;
+                document.getElementById('webcam').srcObject = stream;
                 document.getElementById('cam-container').classList.remove('hidden');
-
-                // Optional local recording setup
-                mediaRecorder = new MediaRecorder(stream);
-                mediaRecorder.ondataavailable = (event) => {
-                    if (event.data.size > 0) recordedChunks.push(event.data);
-                };
-                mediaRecorder.start();
-
-                // Change button to let her proceed after checking camera
-                let btnGroup = document.querySelector('#screen-2 .btn-group');
-                btnGroup.innerHTML = `<button class="btn-yes" onclick="goToHeartScreen()">Continue to My Heart 👉</button>`;
+                document.getElementById('cam-btns').innerHTML = `<button class="btn-yes" onclick="goToHeartScreen()">Continue to My Heart 👉</button>`;
             } catch (err) {
-                // If she clicks Block or denies permission, gracefully move on without breaking!
-                alert("No worries at all! Let's keep going.");
+                alert("No worries at all, my love! Let's keep going.");
                 goToHeartScreen();
             }
         }
 
         function goToHeartScreen() {
-            // Stop camera stream if active
             const videoElement = document.getElementById('webcam');
             if (videoElement.srcObject) {
-                let tracks = videoElement.srcObject.getTracks();
-                tracks.forEach(track => track.stop());
+                videoElement.srcObject.getTracks().forEach(track => track.stop());
             }
             document.getElementById('screen-2').classList.add('hidden');
             document.getElementById('screen-3').classList.remove('hidden');
         }
 
         function handleBrokenNo() {
-            document.getElementById('heart-subtext').innerText = "❌ Oops! It is broken! I knew you would click on No, so I made it broken—there is no other option, you have to enter my heart! 😂💖";
-            document.querySelector('#screen-3 .btn-no').style.display = 'none';
+            document.getElementById('heart-subtext').innerText = "❌ Oops! The button is broken! I knew you would click on No, so I broke it. There is no escape—you HAVE to enter my heart! 😂💖";
+            document.getElementById('broken-no-btn').style.display = 'none';
         }
 
         function enterHeart() {
             document.getElementById('screen-3').classList.add('hidden');
             document.getElementById('screen-4').classList.remove('hidden');
+        }
+
+        // INTERACTIVE HUB LOGIC
+        const loveReasons = [
+            "Your beautiful smile brightens up my worst days.",
+            "The cute way you get angry and say 'Hogu!'",
+            "How caring and sweet you are when I need you most.",
+            "Because you are my forever Bangara! 💍",
+            "The way your eyes twinkle when you laugh genuinely."
+        ];
+
+        function generateLoveReason() {
+            const random = loveReasons[Math.floor(Math.random() * loveReasons.length)];
+            document.getElementById('love-reason').innerText = `"${random}"`;
+        }
+
+        const flowers = ["🌱", "🌿", "🌸", "🌷", "🌹", "🌻", "🌺✨"];
+        let flowerIndex = 0;
+
+        function waterGarden() {
+            if (flowerIndex < flowers.length - 1) {
+                flowerIndex++;
+                document.getElementById('garden-flowers').innerText += ` ${flowers[flowerIndex]}`;
+            } else {
+                alert("Our garden is in full bloom, just like my love for you! 🌹✨");
+            }
+        }
+
+        const memories = [
+            "Remember our first long conversation that went on for hours? ❤️",
+            "That special moment when I realized you were the one for me ✨",
+            "Our favorite inside joke that nobody else understands! 😂"
+        ];
+
+        function revealMemory() {
+            const randomMem = memories[Math.floor(Math.random() * memories.length)];
+            document.getElementById('scratch-card').innerText = randomMem;
+            document.getElementById('scratch-card').style.background = "#ffe6ea";
+            document.getElementById('scratch-card').style.color = "#d63384";
+        }
+
+        const dateIdeas = [
+            "Late-night ice cream run & long drive 🍦🚗",
+            "Cozy movie marathon with your favorite snacks 🍿🎬",
+            "Cooking dinner together while listening to romantic music 🍝🎵",
+            "Sunset stroll and long uninterrupted talks 🌅"
+        ];
+
+        function spinDateIdea() {
+            const randomDate = dateIdeas[Math.floor(Math.random() * dateIdeas.length)];
+            document.getElementById('date-idea').innerText = `Next Date: ${randomDate}`;
+        }
+
+        const fortunes = [
+            "High chance of receiving unexpected hugs and kisses today! 😘",
+            "Your partner is thinking about you right at this exact second ❤️",
+            "A super fun and romantic surprise is coming your way soon ✨"
+        ];
+
+        function crackFortune() {
+            const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+            document.getElementById('fortune-text').innerText = randomFortune;
+        }
+
+        function openLetter() {
+            alert("Dearest Bangara,\n\nNo matter how busy life gets, remember that you are my favorite person, my safest home, and my biggest happiness. Thank you for being in my life!\n\nForever Yours ❤️");
         }
     </script>
 </body>
